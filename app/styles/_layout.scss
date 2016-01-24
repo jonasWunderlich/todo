@@ -1,0 +1,44 @@
+
+body {
+  padding: 0;
+}
+
+.header, .footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.header {
+  margin-bottom: 10px;
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+
+  .navbar-default {
+    background: none;
+    border: 0;
+  }
+}
+
+
+.footer {
+  padding-top: 19px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove padding */
+  .header,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Space out header */
+  .header {
+    margin-bottom: 30px;
+  }
+}
