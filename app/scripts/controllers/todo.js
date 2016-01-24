@@ -8,6 +8,8 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('ToDoCtrl', function () {
+  .controller('ToDoCtrl', function ($scope, toDoList) {
+
+    $scope.todos = toDoList;
 
   });

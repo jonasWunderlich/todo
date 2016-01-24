@@ -23,7 +23,11 @@ angular
       templateUrl: 'views/todo.html',
       controller: 'ToDoCtrl',
       controllerAs: 'todo',
-      resolve: {}
+      resolve: {
+        toDoList: function (toDoService) {
+          return toDoService.getToDos();
+        }
+      }
     };
 
     $routeProvider
