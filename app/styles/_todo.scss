@@ -1,0 +1,23 @@
+
+ul.todo-wrapper {
+  list-style: none;
+  padding-left: 0;
+}
+
+.todo-item {
+  padding: 10px;
+
+  .todo-item-state {
+    display: inline;
+    padding: 10px;
+  }
+  .todo-item-text {
+    display: inline;
+    padding: 10px;
+  }
+  .todo-item-remove {
+    display: inline;
+    color: #C02;
+  }
+
+}

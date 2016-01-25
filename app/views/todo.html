@@ -1,5 +1,19 @@
-<h1>ToDo-App</h1>
+<!--<h1>Things that have to be done</h1>-->
 
-<div class="todo-wrapper">
-  <div class="todo-item" ng-repeat="todo in todos">{{todo}}</div>
-</div>
+<ul class="todo-wrapper">
+
+  <!--Create new ToDo-Item-->
+  <li class="todo-item new-todo-item">
+    <div class="todo-item-state">{{newToDoItem.state}}</div>
+    <input type="text" ng-model="newToDoItem.text" press-enter="createNewToDoItem(newToDoItem)">
+  </li>
+
+  <!--Existing ToDo-Items-->
+  <li class="todo-item" ng-repeat="todo in todos" ng-dblclick="editTodo(todo)">
+    <div class="todo-item-state" ng-click="changeState(todo)">{{todo.state}}</div>
+    <input class="todo-item-text" ng-model="todo.text">{{todo.text}}</input>
+    <div class="todo-item-text">{{todo.type}}</div>
+    <div class="todo-item-remove" ng-click="deleteToDo(todo)">delete</div>
+  </li>
+
+</ul>
