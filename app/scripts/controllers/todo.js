@@ -16,6 +16,7 @@ angular.module('toDoApp')
       text: '',
       type: 'A'
     };
+    $scope.todoEdit = null;
 
     /**
      * @ngdoc method
@@ -38,6 +39,10 @@ angular.module('toDoApp')
     $scope.deleteToDo = function(todo) {
       var index = $scope.todos.indexOf(todo);
       $scope.todos.splice(index, 1);
+    };
+
+    $scope.focusNewToDoItem = function() {
+      $scope.todoEdit = null;
     };
 
     /**
@@ -65,7 +70,21 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.editTodo = function(todo) {
+      $scope.todoEdit = todo;
       $log.debug(todo.text + " in edit mode");
-    }
+    };
+
+    /**
+     * @ngdoc method
+     * @name saveToDoItem
+     * @methodOf toDoApp.ToDoCtrl
+     * @description Puts ToDo-Item in Edit-Mode
+     * @param todo
+     */
+    $scope.saveToDoItem = function(todo) {
+      $scope.todoEdit = null;
+      $log.debug(todo.text + " saved");
+    };
+
 
   });
