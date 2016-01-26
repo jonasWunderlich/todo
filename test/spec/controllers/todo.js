@@ -1,23 +1,22 @@
 'use strict';
 
-describe('Controller: AboutCtrl', function () {
+describe('Controller: ToDoCtrl', function () {
 
   // load the controller's module
   beforeEach(module('toDoApp'));
 
-  var AboutCtrl,
-    scope;
+  var ToDoCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    AboutCtrl = $controller('AboutCtrl', {
+    ToDoCtrl = $controller('ToDoCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
-  it('should attach a list of awesomeThings to the scope', function () {
-    expect(AboutCtrl.awesomeThings.length).toBe(3);
+  it('should attach a list of todos to the scope', function () {
+    expect(scope.awesomeThings.length).toBeGreaterThan(0);
   });
 });
