@@ -24,9 +24,10 @@ angular
       controller: 'ToDoCtrl',
       controllerAs: 'todo',
       resolve: {
-        toDoList: function (toDoService) {
-          return toDoService.getToDos();
-        }
+        toDoList: ['toDoService', function (toDoService) {
+          toDoService.getToDos();
+          return toDoService;
+        }]
       }
     };
 

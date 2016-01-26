@@ -8,10 +8,11 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('ToDoCtrl', function ($scope, $log, toDoService) {
+  .controller('ToDoCtrl', function ($scope, $log, toDoList) {
 
-    $scope.todos = toDoService.todos;
+    $scope.todos = toDoList.todos;
     $scope.newToDoItem = {};
+
     $scope.todoEdit = null;
     $scope.lastEdit = null;
     $scope.lastEditIndex = null;
@@ -26,7 +27,7 @@ angular.module('toDoApp')
     $scope.changeState = function(todo) {
       _revertEdits();
       todo.state = (todo.state + 1) % 3;
-      toDoService.putToDo(todo)
+      toDoList.putToDo(todo)
     };
 
     /**
@@ -38,7 +39,7 @@ angular.module('toDoApp')
      */
     $scope.deleteToDo = function(todo) {
       _revertEdits();
-      toDoService.deleteToDo(todo);
+      toDoList.deleteToDo(todo);
     };
 
     /**
@@ -53,7 +54,7 @@ angular.module('toDoApp')
         return;
       }
       $scope.newToDoItem.state = 0;
-      toDoService.addToDo(todo);
+      toDoList.addToDo(todo);
       $scope.newToDoItem = {}
     };
 
@@ -79,10 +80,11 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.saveToDoItem = function(todo) {
-      $scope.todoEdit = null;
-      $scope.todoEditIndex = null;
-      toDoService.putToDo(todo);
+      toDoList.putToDo(todo);
       $log.debug(todo.text + " saved");
+      $scope.todoEdit = null;
+      $scope.lastEdit = null;
+      $scope.lastEditIndex = null;
     };
 
     /**
