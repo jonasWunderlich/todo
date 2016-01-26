@@ -14,6 +14,7 @@ angular.module('toDoApp')
     $scope.newToDoItem = {};
     $scope.todoEdit = null;
     $scope.lastEdit = null;
+    $scope.lastEditIndex = null;
 
     /**
      * @ngdoc method
@@ -23,6 +24,7 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.changeState = function(todo) {
+      _revertEdits();
       todo.state = (todo.state + 1) % 3;
       toDoService.putToDo(todo)
     };
@@ -35,17 +37,8 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.deleteToDo = function(todo) {
+      _revertEdits();
       toDoService.deleteToDo(todo);
-    };
-
-    /**
-     * @ngdoc method
-     * @name deleteToDo
-     * @methodOf toDoApp.ToDoCtrl
-     * @description When Input of new TODO is focused blur last todo in edit-mode
-     */
-    $scope.focusNewToDoItem = function() {
-      $scope.todoEdit = null;
     };
 
     /**
@@ -56,6 +49,9 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.createNewToDoItem = function(todo) {
+      if (!$scope.newToDoItem.text) {
+        return;
+      }
       $scope.newToDoItem.state = 0;
       toDoService.addToDo(todo);
       $scope.newToDoItem = {}
@@ -70,8 +66,9 @@ angular.module('toDoApp')
      */
     $scope.editTodo = function(todo) {
       $log.debug("Edit Mode:", todo);
-      $scope.lastEdit = angular.extend({}, todo);
       $scope.todoEdit = todo;
+      $scope.lastEdit = angular.extend({}, todo);
+      $scope.lastEditIndex = $scope.todos.indexOf(todo);
     };
 
     /**
@@ -83,16 +80,47 @@ angular.module('toDoApp')
      */
     $scope.saveToDoItem = function(todo) {
       $scope.todoEdit = null;
+      $scope.todoEditIndex = null;
       toDoService.putToDo(todo);
       $log.debug(todo.text + " saved");
     };
 
-    $scope.revertEdits = function (todo) {
-      $scope.todos[$scope.todos.indexOf(todo)] = $scope.lastEdit;
-      $scope.todoEdit = null;
+    /**
+     * @ngdoc method
+     * @name escapeEdit
+     * @methodOf toDoApp.ToDoCtrl
+     * @description reverts changes
+     * @private
+     */
+    function _revertEdits() {
+      if(!$scope.lastEdit) {
+        return;
+      }
+      $log.debug('Revert Edit of ', $scope.lastEdit);
+      $scope.todos[$scope.lastEditIndex] = $scope.lastEdit;
       $scope.lastEdit = null;
-      $scope.reverted = true;
+      $scope.lastEditIndex = null;
+    }
+
+    /**
+     * @ngdoc method
+     * @name deleteToDo
+     * @methodOf toDoApp.ToDoCtrl
+     * @description When Input of new TODO is focused blur last todo in edit-mode
+     */
+    $scope.focusNewToDoItem = function() {
+      _revertEdits();
     };
 
+    /**
+     * @ngdoc method
+     * @name escapeEdit
+     * @methodOf toDoApp.ToDoCtrl
+     * @description escapes edit-mode and calls function to revert changes
+     */
+    $scope.escapeEdit = function() {
+      _revertEdits();
+      $scope.todoEdit = null;
+    };
 
   });
