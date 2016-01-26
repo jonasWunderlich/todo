@@ -6,11 +6,11 @@
   <li class="todo-item new-todo-item">
     <div class="todo-item-state">{{newToDoItem.state}}</div>
     <input type="text" class="todo-item-new"
+           placeholder="Neue Aufgabe"
            ng-model="newToDoItem.text"
            press-enter="createNewToDoItem(newToDoItem)"
            ng-focus="focusNewToDoItem()">
   </li>
-  <br>
 
   <!--Existing ToDo-Items-->
   <li class="todo-item" ng-repeat="todo in todos" ng-dblclick="editTodo(todo)" ng-class="{edit: todo === todoEdit}">
@@ -19,7 +19,6 @@
            ng-model="todo.text"
            press-enter="saveToDoItem(todo)">
     <div class="todo-item-text">{{todo.text}}</div>
-    <!--<div class="todo-item-text">{{todo.type}}</div>-->
     <div class="todo-item-remove" ng-click="deleteToDo(todo)">delete</div>
   </li>
 
