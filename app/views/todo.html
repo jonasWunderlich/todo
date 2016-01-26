@@ -4,7 +4,11 @@
 
   <!--Create new ToDo-Item-->
   <li class="todo-item new-todo-item">
-    <div class="todo-item-state">{{newToDoItem.state}}</div>
+
+    <div class="todo-item-state">
+      <div class="btn btn-default" disabled>
+        <i class="fa fa-plus fa-1x"></i></div></div>
+
     <input type="text" class="todo-item-new"
            placeholder="Neue Aufgabe"
            ng-model="newToDoItem.text"
@@ -17,15 +21,20 @@
       ng-repeat="todo in todos | orderBy:'state'"
       ng-dblclick="editTodo(todo)"
       ng-class="{edit: todo === todoEdit, inprogress: todo.state === 1, done: todo.state === 2}">
-    <div class="todo-item-state"
-         ng-click="changeState(todo)">{{todo.state}}</div>
+
+    <todo-state state="todo.state"
+                ng-click="changeState(todo)"></todo-state>
+
     <input class="todo-item-edit"
            ng-model="todo.text"
            press-enter="saveToDoItem(todo)"
            press-escape="escapeEdit()">
+
     <div class="todo-item-text">{{todo.text}}</div>
+
     <div class="todo-item-remove"
-         ng-click="deleteToDo(todo)">delete</div>
+         ng-click="deleteToDo(todo)"><i class="fa fa-times fa-1x"></i></div>
+
   </li>
 
 </ul>
