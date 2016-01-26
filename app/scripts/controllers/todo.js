@@ -8,15 +8,12 @@
  * Controller of the toDoApp
  */
 angular.module('toDoApp')
-  .controller('ToDoCtrl', function ($scope, toDoList, $log) {
+  .controller('ToDoCtrl', function ($scope, $log, toDoService) {
 
-    $scope.todos = toDoList;
-    $scope.newToDoItem = {
-      state: 0,
-      text: '',
-      type: 'A'
-    };
+    $scope.todos = toDoService.todos;
+    $scope.newToDoItem = {};
     $scope.todoEdit = null;
+    $scope.lastEdit = null;
 
     /**
      * @ngdoc method
@@ -27,6 +24,7 @@ angular.module('toDoApp')
      */
     $scope.changeState = function(todo) {
       todo.state = (todo.state + 1) % 3;
+      toDoService.putToDo(todo)
     };
 
     /**
@@ -37,10 +35,15 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.deleteToDo = function(todo) {
-      var index = $scope.todos.indexOf(todo);
-      $scope.todos.splice(index, 1);
+      toDoService.deleteToDo(todo);
     };
 
+    /**
+     * @ngdoc method
+     * @name deleteToDo
+     * @methodOf toDoApp.ToDoCtrl
+     * @description When Input of new TODO is focused blur last todo in edit-mode
+     */
     $scope.focusNewToDoItem = function() {
       $scope.todoEdit = null;
     };
@@ -53,13 +56,9 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.createNewToDoItem = function(todo) {
-      $log.debug(todo);
-      $scope.todos.push(todo);
-      $scope.newToDoItem = {
-        state: 0,
-        text: '',
-        type: 'A'
-      };
+      $scope.newToDoItem.state = 0;
+      toDoService.addToDo(todo);
+      $scope.newToDoItem = {}
     };
 
     /**
@@ -70,8 +69,9 @@ angular.module('toDoApp')
      * @param todo
      */
     $scope.editTodo = function(todo) {
+      $log.debug("Edit Mode:", todo);
+      $scope.lastEdit = angular.extend({}, todo);
       $scope.todoEdit = todo;
-      $log.debug(todo.text + " in edit mode");
     };
 
     /**
@@ -83,7 +83,15 @@ angular.module('toDoApp')
      */
     $scope.saveToDoItem = function(todo) {
       $scope.todoEdit = null;
+      toDoService.putToDo(todo);
       $log.debug(todo.text + " saved");
+    };
+
+    $scope.revertEdits = function (todo) {
+      $scope.todos[$scope.todos.indexOf(todo)] = $scope.lastEdit;
+      $scope.todoEdit = null;
+      $scope.lastEdit = null;
+      $scope.reverted = true;
     };
 
 
