@@ -11,9 +11,9 @@ angular.module('toDoApp')
     return {
       template: '<div class="todo-item-state">' +
                   '<div class="btn btn-default">' +
-                    '<i class="fa fa-star fa-1x" ng-show="state === 0"></i>' +
-                    '<i class="fa fa-wrench fa-1x" ng-show="state === 1"></i>' +
-                    '<i class="fa fa-archive fa-1x" ng-show="state === 2"></i>' +
+                    '<span class="glyphicon glyphicon-star-empty" ng-show="state === 0"></span>' +
+                    '<span class="glyphicon glyphicon-wrench" ng-show="state === 1"></span>' +
+                    '<span class="glyphicon glyphicon-folder-close" ng-show="state === 2"></span>' +
                   '</div>' +
                 '</div>',
       restrict: 'E',
