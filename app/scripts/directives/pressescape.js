@@ -2,17 +2,17 @@
 
 /**
  * @ngdoc directive
- * @name toDoApp.directive:pressEnter
+ * @name toDoApp.directive:pressEscape
  * @description
- * # pressEnter
+ * # pressEscape
  */
 angular.module('toDoApp')
-  .directive('pressEnter', function () {
+  .directive('pressEscape', function () {
     return function (scope, element, attrs) {
       element.bind("keydown", function (event) {
-        if(event.which === 13) {
+        if(event.which === 27) {
           scope.$apply(function (){
-            scope.$eval(attrs.pressEnter);
+            scope.$eval(attrs.pressEscape);
           });
 
           event.preventDefault();
