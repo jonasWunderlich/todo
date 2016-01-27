@@ -12,9 +12,14 @@ describe('Directive: todoState', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
+
+  it('should applied template', inject(function ($compile) {
     element = angular.element('<todo-state></todo-state>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the todoState directive');
+    expect(element.html()).not.toEqual('');
   }));
+
+  it('should contain three different state buttons', function () {
+    expect(element.find('span').length).toEqual(3);
+  });
 });

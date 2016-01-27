@@ -16,7 +16,4 @@ describe('Controller: ToDoCtrl', function () {
     });
   }));
 
-  it('should attach a list of todos to the scope', function () {
-    expect(scope.awesomeThings.length).toBeGreaterThan(0);
-  });
 });
