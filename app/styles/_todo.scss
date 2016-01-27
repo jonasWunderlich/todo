@@ -82,4 +82,7 @@ ul.todo-wrapper {
   right: 0;
   line-height: 1.3;
   color: #C02;
+  &:hover {
+    opacity: .3;
+  }
 }
